@@ -1,0 +1,71 @@
+package org.jenkinsci.plugins.badge.BadgeAction
+
+def l = namespace(lib.LayoutTagLib)
+def st = namespace("jelly:stapler")
+
+l.layout {
+    l.main_panel {
+        h2(_("Status Badges"))
+        p(raw(_("blurb")))
+        raw("""
+<p>
+</p>
+<script>
+    Behaviour.register({
+        "INPUT.select-all" : function(e) {
+            e.onclick = function () {
+                e.focus();
+                e.select();
+            }
+        }
+    });
+</script>
+<style>
+    INPUT.select-all {
+        width:100%;
+    }
+    IMG#badge {
+        margin-left:2em;
+    }
+</style>
+""")
+
+        def base =  "${app.rootUrl}${my.project.url}";
+        def badge = base + "status-badges/build/icon"
+
+        def fullJobName = h.escape(my.project.fullName);
+        def publicbadge = "${app.rootUrl}status-badges/build/icon?job=${fullJobName}";
+        h3 {
+            text(_("Image"))
+            img(id:"badge",src:badge)
+        }
+        b {text(_("protected"))}
+        input(type:"text",value:badge,class:"select-all")
+        b {text(_("unprotected"))}
+        input(type:"text",value:publicbadge,class:"select-all")
+
+        h3(_("Markdown"))
+        b {text(_("protected"))}
+        input(type:"text",value:"[![Build Status](${badge})](${base})",class:"select-all")
+        b {text(_("unprotected"))}
+        input(type:"text",value:"[![Build Status](${publicbadge})](${base})",class:"select-all")
+
+        h3(_("HTML"))
+        b {text(_("protected"))}
+        input(type:"text",value:"<a href='${base}'><img src='${badge}'></a>",class:"select-all")
+        b {text(_("unprotected"))}
+        input(type:"text",value:"<a href='${base}'><img src='${publicbadge}'></a>",class:"select-all")
+
+        h3(_("Confluence"))
+        b {text(_("protected"))}
+        input(type:"text",value:"[!${badge}!|${base}]",class:"select-all")
+        b {text(_("unprotected"))}
+        input(type:"text",value:"[!${publicbadge}!|${base}]",class:"select-all")
+
+        h3(_("XWiki"))
+        b {text(_("protected"))}
+        input(type:"text",value:"[[image:${badge}>>${base}||target='__new']]",class:"select-all")
+        b {text(_("unprotected"))}
+        input(type:"text",value:"[[image:${publicbadge}>>${base}||target='__new']]",class:"select-all")
+    }
+}
