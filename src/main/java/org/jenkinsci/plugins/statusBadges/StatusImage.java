@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.statusBadges;
+package org.jenkinsci.plugins.statusbadges;
 
 import hudson.util.IOUtils;
 import jenkins.model.Jenkins;
@@ -36,13 +36,19 @@ class StatusImage implements HttpResponse {
         };
     };
 
-    StatusImage(String subject, String status, String color) throws IOException {
-        etag = Jenkins.RESOURCE_PATH + '/' + subject + status + color;
+    StatusImage(String subject, String status, String colorName) throws IOException {
+        etag = Jenkins.RESOURCE_PATH + '/' + subject + status + colorName;
 
         URL image = new URL(Jenkins.getInstance().pluginManager.getPlugin("status-badges").baseResourceURL, "status/default.svg");
         InputStream s = image.openStream();
 
         double[] widths = {measureText(subject) + 10, measureText(status) + 10};
+
+        String color = colors.get(colorName);
+
+        if (color == null) {
+            color = '#' + colorName;
+        }
 
         try {
             payload = IOUtils.toString(s, "utf-8")
@@ -51,7 +57,7 @@ class StatusImage implements HttpResponse {
                 .replace("{{blockPos}}",   String.valueOf(widths[0]))
                 .replace("{{blockWidth}}", String.valueOf(widths[1]))
                 .replace("{{subjectPos}}", String.valueOf((widths[0] / 2) + 1))
-                .replace("{{statusPos}}",  String.valueOf(((widths[0] + widths[1]) / 2) - 1))
+                .replace("{{statusPos}}",  String.valueOf(widths[0] + (widths[1] / 2) - 1))
                 .replace("{{subject}}",    subject)
                 .replace("{{status}}",     status)
                 .replace("{{color}}",      color)

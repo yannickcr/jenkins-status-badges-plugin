@@ -25,6 +25,14 @@
     </pluginRepository>
   </pluginRepositories>
 
+  <dependencies>
+    <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna</artifactId>
+      <version>3.2.2</version>
+    </dependency>
+  </dependencies>
+
   <scm>
     <connection>scm:git:git://github.com/yannickcr/jenkins-${project.artifactId}-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:yannickcr/jenkins-${project.artifactId}-plugin.git</developerConnection>

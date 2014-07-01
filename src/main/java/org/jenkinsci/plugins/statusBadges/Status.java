@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.statusBadges;
+package org.jenkinsci.plugins.statusbadges;
 
 import hudson.Extension;
 import hudson.model.Item;

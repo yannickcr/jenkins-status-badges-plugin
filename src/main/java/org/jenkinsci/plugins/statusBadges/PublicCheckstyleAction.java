@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.statusBadges;
+package org.jenkinsci.plugins.statusbadges;
 
 import hudson.Extension;
 import hudson.model.Item;
@@ -40,16 +40,15 @@ import hudson.model.*;
 public class PublicCheckstyleAction implements UnprotectedRootAction {
     private final ImageResolver iconResolver;
     private final CheckStyleStatus checkStyleStatus;
-    public static Permission VIEW_STATUS;
+    final public static Permission VIEW_STATUS = new Permission(Item.PERMISSIONS, "ViewStatus", Messages._ViewStatus_Permission(), Item.READ, PermissionScope.ITEM);
 
     public PublicCheckstyleAction() throws IOException {
         iconResolver = new ImageResolver();
         checkStyleStatus = new CheckStyleStatus();
-        VIEW_STATUS = checkStyleStatus.VIEW_STATUS;
     }
 
     public String getUrlName() {
-        return "status-badges/checkstyle";
+        return "statusbadges-checkstyle";
     }
 
     public String getIconFileName() {

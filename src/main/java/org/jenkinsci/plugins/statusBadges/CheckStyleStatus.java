@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.statusBadges;
+package org.jenkinsci.plugins.statusbadges;
 
 import hudson.model.AbstractProject;
 import jenkins.*;
@@ -45,7 +45,7 @@ public class CheckStyleStatus extends Status {
         }
 
         String[] files = hudson.Util.createFileSet(workspaceDir, pattern).toString().split(";");
-        for (int i = 0; i < files.length - 1; i++) {
+        for (int i = 0; i < files.length; i++) {
             String[] fullPath = {workspaceDir.toString(), files[i]};
             files[i] = StringUtils.join(fullPath, "/");
         }
@@ -62,7 +62,7 @@ public class CheckStyleStatus extends Status {
 
     public int searchForErrors(String[] files) throws IOException, ParserConfigurationException, SAXException {
         int errors = 0;
-        for (int i = 0; i < files.length - 1; i++) {
+        for (int i = 0; i < files.length; i++) {
             errors += searchForError(files[i]);
         }
         return errors;

@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.statusBadges;
+package org.jenkinsci.plugins.statusbadges;
 
 import hudson.Extension;
 import hudson.model.AbstractProject;
@@ -24,8 +24,8 @@ public class BuildActionFactory extends TransientProjectActionFactory {
         return Collections.singleton(new BuildAction(this,target));
     }
 
-    public StatusImage getImage(BallColor color) throws IOException {
-        return iconResolver.getImage(color);
+    public StatusImage getBuildImage(BallColor color) throws IOException {
+        return iconResolver.getBuildImage(color);
     }
 
 }

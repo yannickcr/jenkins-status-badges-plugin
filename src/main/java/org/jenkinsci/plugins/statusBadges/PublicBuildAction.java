@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.jenkinsci.plugins.statusBadges;
+package org.jenkinsci.plugins.statusbadges;
 
 import hudson.Extension;
 import hudson.model.Item;
@@ -54,16 +54,15 @@ import org.kohsuke.stapler.StaplerResponse;
 public class PublicBuildAction implements UnprotectedRootAction {
     private final ImageResolver iconResolver;
     private final BuildStatus buildStatus;
-    public static Permission VIEW_STATUS;
+    final public static Permission VIEW_STATUS = new Permission(Item.PERMISSIONS, "ViewStatus", Messages._ViewStatus_Permission(), Item.READ, PermissionScope.ITEM);
 
     public PublicBuildAction() throws IOException {
         iconResolver = new ImageResolver();
         buildStatus = new BuildStatus();
-        VIEW_STATUS = buildStatus.VIEW_STATUS;
     }
 
     public String getUrlName() {
-        return "status-badges/build";
+        return "statusbadges-build";
     }
 
     public String getIconFileName() {
@@ -76,7 +75,7 @@ public class PublicBuildAction implements UnprotectedRootAction {
 
     public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job) throws IOException, ServletException {
         AbstractProject<?, ?> project = buildStatus.getProject(job, req, rsp);
-        return iconResolver.getImage(project.getIconColor());
+        return iconResolver.getBuildImage(project.getIconColor());
     }
 
 }

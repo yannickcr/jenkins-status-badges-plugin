@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.statusBadges;
+package org.jenkinsci.plugins.statusbadges;
 
 import hudson.model.AbstractProject;
 import hudson.model.Action;
@@ -24,7 +24,7 @@ public class BuildAction implements Action {
     }
 
     public String getIconFileName() {
-        return Jenkins.RESOURCE_PATH + "/plugin/jenkins-status-badges/images/24x24/shield.png";
+        return Jenkins.RESOURCE_PATH + "/plugin/status-badges/images/24x24/shield.png";
     }
 
     public String getDisplayName() {
@@ -32,10 +32,10 @@ public class BuildAction implements Action {
     }
 
     public String getUrlName() {
-        return "status-badges/build";
+        return "statusbadges-build";
     }
 
     public HttpResponse doIcon() throws IOException {
-        return factory.getImage(project.getIconColor());
+        return factory.getBuildImage(project.getIconColor());
     }
 }

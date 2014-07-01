@@ -1,11 +1,11 @@
-package org.jenkinsci.plugins.statusBadges;
+package org.jenkinsci.plugins.statusbadges;
 
 import hudson.model.BallColor;
 import java.io.IOException;
 
 public class ImageResolver {
 
-    public StatusImage getImage(BallColor ballColor) throws IOException {
+    public StatusImage getBuildImage(BallColor ballColor) throws IOException {
         String subject = "build";
         String status = "unknown";
         String color = "lightgrey";
