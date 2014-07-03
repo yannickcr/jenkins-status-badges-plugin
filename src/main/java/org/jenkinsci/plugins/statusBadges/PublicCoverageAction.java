@@ -59,10 +59,10 @@ public class PublicCoverageAction implements UnprotectedRootAction {
         return null;
     }
 
-    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException {
+    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException {
         AbstractProject<?, ?> project = coverageStatus.getProject(job, req, rsp);
         int coverage = coverageStatus.getCoverage(project, "hudson.plugins.clover.CloverPublisher");
-        return iconResolver.getCoverageImage(coverage);
+        return iconResolver.getCoverageImage(coverage, style);
     }
 
 }

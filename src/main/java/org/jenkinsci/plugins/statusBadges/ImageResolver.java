@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class ImageResolver {
 
-    public StatusImage getBuildImage(BallColor ballColor) throws IOException {
+    public StatusImage getBuildImage(BallColor ballColor, String style) throws IOException {
         String subject = "build";
         String status = "unknown";
         String color = "lightgrey";
@@ -31,10 +31,10 @@ public class ImageResolver {
             }
         }
 
-        return new StatusImage(subject, status, color);
+        return new StatusImage(subject, status, color, style);
     }
 
-    public StatusImage getCheckstyleImage(int errors) throws IOException {
+    public StatusImage getCheckstyleImage(int errors, String style) throws IOException {
         String subject = "checkstyle";
         String status = "unknown";
         String color = "lightgrey";
@@ -47,10 +47,10 @@ public class ImageResolver {
             color = "red";
         }
 
-        return new StatusImage(subject, status, color);
+        return new StatusImage(subject, status, color, style);
     }
 
-    public StatusImage getCoverageImage(int coverage) throws IOException {
+    public StatusImage getCoverageImage(int coverage, String style) throws IOException {
         String subject = "coverage";
         String status = Integer.toString(coverage) + "%";
         String color = "lightgrey";
@@ -69,7 +69,7 @@ public class ImageResolver {
             color = "red";
         }
 
-        return new StatusImage(subject, status, color);
+        return new StatusImage(subject, status, color, style);
     }
 
 }

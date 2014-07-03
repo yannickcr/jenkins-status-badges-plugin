@@ -6,6 +6,7 @@ import hudson.util.HttpResponses;
 import hudson.util.IOUtils;
 import jenkins.model.Jenkins;
 import org.kohsuke.stapler.HttpResponse;
+import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 import javax.servlet.ServletException;
@@ -35,7 +36,7 @@ public class BuildAction implements Action {
         return "statusbadges-build";
     }
 
-    public HttpResponse doIcon() throws IOException {
-        return factory.getBuildImage(project.getIconColor());
+    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String style) throws IOException {
+        return factory.getBuildImage(project.getIconColor(), style);
     }
 }

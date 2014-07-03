@@ -24,8 +24,8 @@ public class BuildActionFactory extends TransientProjectActionFactory {
         return Collections.singleton(new BuildAction(this,target));
     }
 
-    public StatusImage getBuildImage(BallColor color) throws IOException {
-        return iconResolver.getBuildImage(color);
+    public StatusImage getBuildImage(BallColor color, String style) throws IOException {
+        return iconResolver.getBuildImage(color, style);
     }
 
 }

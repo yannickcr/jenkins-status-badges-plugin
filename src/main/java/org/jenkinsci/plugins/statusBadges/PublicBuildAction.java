@@ -73,9 +73,9 @@ public class PublicBuildAction implements UnprotectedRootAction {
         return null;
     }
 
-    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job) throws IOException, ServletException {
+    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job, @QueryParameter String style) throws IOException, ServletException {
         AbstractProject<?, ?> project = buildStatus.getProject(job, req, rsp);
-        return iconResolver.getBuildImage(project.getIconColor());
+        return iconResolver.getBuildImage(project.getIconColor(), style);
     }
 
 }

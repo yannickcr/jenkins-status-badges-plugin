@@ -59,11 +59,11 @@ public class PublicCheckstyleAction implements UnprotectedRootAction {
         return null;
     }
 
-    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException {
+    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException {
         AbstractProject<?, ?> project = checkStyleStatus.getProject(job, req, rsp);
         String[] files = checkStyleStatus.getReportFiles(project, "hudson.plugins.checkstyle.CheckStylePublisher");
         int errors = checkStyleStatus.searchForErrors(files);
-        return iconResolver.getCheckstyleImage(errors);
+        return iconResolver.getCheckstyleImage(errors, style);
     }
 
 }

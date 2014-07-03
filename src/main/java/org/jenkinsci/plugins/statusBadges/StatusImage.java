@@ -36,10 +36,14 @@ class StatusImage implements HttpResponse {
         };
     };
 
-    StatusImage(String subject, String status, String colorName) throws IOException {
+    StatusImage(String subject, String status, String colorName, String style) throws IOException {
         etag = Jenkins.RESOURCE_PATH + '/' + subject + status + colorName;
 
-        URL image = new URL(Jenkins.getInstance().pluginManager.getPlugin("status-badges").baseResourceURL, "status/default.svg");
+        if (style == null) {
+            style = "default";
+        }
+
+        URL image = new URL(Jenkins.getInstance().pluginManager.getPlugin("status-badges").baseResourceURL, "status/" + style + ".svg");
         InputStream s = image.openStream();
 
         double[] widths = {measureText(subject) + 10, measureText(status) + 10};

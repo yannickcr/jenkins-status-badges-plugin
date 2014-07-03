@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="81" height="20">
+<svg xmlns="http://www.w3.org/2000/svg" width="{{fullwidth}}" height="20">
     <linearGradient id="a" x2="0" y2="100%">
         <stop offset="0" stop-color="#fff" stop-opacity=".1" />
         <stop offset=".1" stop-color="#fff" stop-opacity=".1" />
         <stop offset=".9" stop-color="#fff" stop-opacity=".1" />
         <stop offset="1" stop-color="#fff" stop-opacity=".1" />
     </linearGradient>
-    <path fill="#555" d="M0 0h81v20h-81z" />
-    <path fill="#e05d44" d="M37 0h44v20h-44zM37 0h4v20h-4z" />
-    <path fill="url(#a)" d="M0 0h81v20h-81z" />
+    <path fill="#555" d="M0 0h{{fullwidth}}v20h-{{fullwidth}}z" />
+    <path fill="{{color}}" d="M{{blockPos}} 0h{{blockWidth}}v20h-{{blockWidth}}zM{{blockPos}} 0h4v20h-4z" />
+    <path fill="url(#a)" d="M0 0h{{fullwidth}}v20h-{{fullwidth}}z" />
     <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
-        <text x="19.5" y="13">{{subject}}</text>
-        <text x="58" y="13">{{status}}</text>
+        <text x="{{subjectPos}}" y="13">{{subject}}</text>
+        <text x="{{statusPos}}" y="13">{{status}}</text>
     </g>
 </svg>
