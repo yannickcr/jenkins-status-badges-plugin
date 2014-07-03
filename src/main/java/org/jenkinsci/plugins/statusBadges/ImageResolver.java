@@ -50,4 +50,26 @@ public class ImageResolver {
         return new StatusImage(subject, status, color);
     }
 
+    public StatusImage getCoverageImage(int coverage) throws IOException {
+        String subject = "coverage";
+        String status = Integer.toString(coverage) + "%";
+        String color = "lightgrey";
+
+        if (coverage > 90) {
+            color = "brightgreen";
+        } else if (coverage > 80) {
+            color = "green";
+        } else if (coverage > 70) {
+            color = "yellowgreen";
+        } else if (coverage > 60) {
+            color = "yellow";
+        } else if (coverage > 50) {
+            color = "orange";
+        } else {
+            color = "red";
+        }
+
+        return new StatusImage(subject, status, color);
+    }
+
 }
