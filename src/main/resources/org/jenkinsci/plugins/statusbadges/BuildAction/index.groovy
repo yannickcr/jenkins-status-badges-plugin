@@ -27,45 +27,78 @@ l.layout {
     IMG#badge {
         margin-left:2em;
     }
+    .codes {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    .codes td {
+        vertical-align: middle;
+        padding: 10px;
+        border: 1px solid #CCC;
+    }
+    .codes img {
+        margin: auto;
+        display: block;
+    }
 </style>
 """)
 
         def base =  "${app.rootUrl}${my.project.url}";
-        def badge = base + "statusbadges-build/icon"
-
         def fullJobName = h.escape(my.project.fullName);
-        def publicbadge = "${app.rootUrl}statusbadges-build/icon?job=${fullJobName}";
-        h3 {
-            text(_("Image"))
-            img(id:"badge",src:badge)
+
+        def badgeBuild = base + "statusbadges-build/icon"
+        def publicbadgeBuild = "${app.rootUrl}statusbadges-build/icon?job=${fullJobName}";
+        def badgeCoverage = base + "statusbadges-coverage/icon"
+        def publicbadgeCoverage = "${app.rootUrl}statusbadges-coverage/icon?job=${fullJobName}";
+        def badgeCheckstyle = base + "statusbadges-checkstyle/icon"
+        def publicbadgeCheckstyle = "${app.rootUrl}statusbadges-checkstyle/icon?job=${fullJobName}";
+
+        table(class:"codes") {
+            thead {
+                tr {
+                    th {
+                        text(_("Preview"))
+                    }
+                    th {
+                        text(_("Code"))
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    td {
+                        img(src:publicbadgeBuild)
+                    }
+                    td {
+                        b {text(_("Protected"))}
+                        input(type:"text",value:badgeBuild,class:"select-all")
+                        b {text(_("Unprotected"))}
+                        input(type:"text",value:publicbadgeBuild,class:"select-all")
+                    }
+                }
+                tr {
+                    td {
+                        img(src:publicbadgeCheckstyle)
+                    }
+                    td {
+                        b {text(_("Protected"))}
+                        input(type:"text",value:badgeCheckstyle,class:"select-all")
+                        b {text(_("Unprotected"))}
+                        input(type:"text",value:publicbadgeCheckstyle,class:"select-all")
+                    }
+                }
+                tr {
+                    td {
+                        img(src:publicbadgeCoverage)
+                    }
+                    td {
+                        b {text(_("Protected"))}
+                        input(type:"text",value:badgeCoverage,class:"select-all")
+                        b {text(_("Unprotected"))}
+                        input(type:"text",value:publicbadgeCoverage,class:"select-all")
+                    }
+                }
+            }
         }
-        b {text(_("protected"))}
-        input(type:"text",value:badge,class:"select-all")
-        b {text(_("unprotected"))}
-        input(type:"text",value:publicbadge,class:"select-all")
-
-        h3(_("Markdown"))
-        b {text(_("protected"))}
-        input(type:"text",value:"[![Build Status](${badge})](${base})",class:"select-all")
-        b {text(_("unprotected"))}
-        input(type:"text",value:"[![Build Status](${publicbadge})](${base})",class:"select-all")
-
-        h3(_("HTML"))
-        b {text(_("protected"))}
-        input(type:"text",value:"<a href='${base}'><img src='${badge}'></a>",class:"select-all")
-        b {text(_("unprotected"))}
-        input(type:"text",value:"<a href='${base}'><img src='${publicbadge}'></a>",class:"select-all")
-
-        h3(_("Confluence"))
-        b {text(_("protected"))}
-        input(type:"text",value:"[!${badge}!|${base}]",class:"select-all")
-        b {text(_("unprotected"))}
-        input(type:"text",value:"[!${publicbadge}!|${base}]",class:"select-all")
-
-        h3(_("XWiki"))
-        b {text(_("protected"))}
-        input(type:"text",value:"[[image:${badge}>>${base}||target='__new']]",class:"select-all")
-        b {text(_("unprotected"))}
-        input(type:"text",value:"[[image:${publicbadge}>>${base}||target='__new']]",class:"select-all")
     }
 }
