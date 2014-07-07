@@ -54,14 +54,19 @@ class StatusImage implements HttpResponse {
             color = '#' + colorName;
         }
 
+        String fullwidth  = String.valueOf(Math.round(widths[0] + widths[1]));
+        String blockPos   = String.valueOf(Math.round(widths[0]));
+        String blockWidth = String.valueOf(Math.round(widths[1]));
+        String subjectPos = String.valueOf(Math.round((widths[0] / 2) + 1));
+        String statusPos  = String.valueOf(Math.round(widths[0] + (widths[1] / 2) - 1));
+
         try {
             payload = IOUtils.toString(s, "utf-8")
-                .replace("{{fullwidth}}",  String.valueOf(widths[0] + widths[1]))
-                .replace("{{fullwidth}}",  String.valueOf(widths[0]))
-                .replace("{{blockPos}}",   String.valueOf(widths[0]))
-                .replace("{{blockWidth}}", String.valueOf(widths[1]))
-                .replace("{{subjectPos}}", String.valueOf((widths[0] / 2) + 1))
-                .replace("{{statusPos}}",  String.valueOf(widths[0] + (widths[1] / 2) - 1))
+                .replace("{{fullwidth}}",  fullwidth)
+                .replace("{{blockPos}}",   blockPos)
+                .replace("{{blockWidth}}", blockWidth)
+                .replace("{{subjectPos}}", subjectPos)
+                .replace("{{statusPos}}",  statusPos)
                 .replace("{{subject}}",    subject)
                 .replace("{{status}}",     status)
                 .replace("{{color}}",      color)
