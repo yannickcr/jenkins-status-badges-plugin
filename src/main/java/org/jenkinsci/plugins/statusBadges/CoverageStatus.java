@@ -22,9 +22,12 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CoverageStatus extends Status {
 
-    public int getCoverage(AbstractProject<?, ?> project, String plugin) throws IOException, ParserConfigurationException, SAXException, InterruptedException {
+    public int getCoverage(AbstractProject<?, ?> project, String[] plugins) throws IOException, ParserConfigurationException, SAXException, InterruptedException {
         AbstractBuild<?, ?> lastBuild = project.getLastBuild();
         String config = project.getConfigFile().toString();
         String workspace = lastBuild.getEnvironment().get("WORKSPACE");
@@ -33,26 +36,53 @@ public class CoverageStatus extends Status {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(configFile);
+        List<String> reportFiles = new ArrayList<String>();
 
-        NodeList pluginConfig = doc.getElementsByTagName(plugin).item(0).getChildNodes();
+        for(int k=0;k<plugins.length; k++) {
 
-        String retportDir = "";
-        String reportFileName = "";
-        for (int j=0;j<pluginConfig.getLength(); j++) {
-            if (pluginConfig.item(j).getNodeName() == "cloverReportDir") {
-                retportDir = pluginConfig.item(j).getTextContent();
+            NodeList pluginSections = doc.getElementsByTagName(plugins[k]);
+
+            if (pluginSections.getLength() == 0) {
                 continue;
             }
-            if (pluginConfig.item(j).getNodeName() == "cloverReportFileName") {
-                reportFileName = pluginConfig.item(j).getTextContent();
-                continue;
+
+            NodeList pluginConfig = pluginSections.item(0).getChildNodes();
+
+            String retportDir = "";
+            String reportFileName = "";
+            for (int j=0;j<pluginConfig.getLength(); j++) {
+                if (pluginConfig.item(j).getNodeName() == "cloverReportDir") {
+                    retportDir = pluginConfig.item(j).getTextContent();
+                    continue;
+                }
+                if (pluginConfig.item(j).getNodeName() == "cloverReportFileName") {
+                    reportFileName = pluginConfig.item(j).getTextContent();
+                    continue;
+                }
             }
+
+            String[] fullPath = {workspaceDir.toString(), retportDir, reportFileName};
+            reportFiles.add(StringUtils.join(fullPath, "/"));
         }
 
-        String[] fullPath = {workspaceDir.toString(), retportDir, reportFileName};
-        String reportFullPath = StringUtils.join(fullPath, "/");
+        String[] reportFilesArray = new String[ reportFiles.size() ];
+        reportFiles.toArray(reportFilesArray);
 
-        File report = new File(reportFullPath);
+        int coverage = 0;
+
+        if (reportFilesArray.length == 0) {
+            return -1;
+        }
+
+        for(int i=0; i<reportFilesArray.length; i++) {
+            coverage += parseFile(reportFilesArray[i]);
+        }
+
+        return (int) Math.floor(coverage / reportFilesArray.length);
+    }
+
+    public int parseFile(String path) throws IOException, ParserConfigurationException, SAXException {
+        File report = new File(path);
         DocumentBuilderFactory reportDbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder reportDBuilder = reportDbFactory.newDocumentBuilder();
         Document reportDoc = reportDBuilder.parse(report);

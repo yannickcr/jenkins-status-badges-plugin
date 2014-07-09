@@ -20,6 +20,7 @@ import static javax.servlet.http.HttpServletResponse.SC_NOT_MODIFIED;
 public class CheckstyleAction implements Action {
     private final CheckstyleActionFactory factory;
     private final CheckstyleStatus checkstyleStatus;
+    private final String[] plugins = {"hudson.plugins.checkstyle.CheckStylePublisher"};
     public final AbstractProject project;
 
     public CheckstyleAction(CheckstyleActionFactory factory, AbstractProject project) {
@@ -41,7 +42,7 @@ public class CheckstyleAction implements Action {
     }
 
     public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException {
-        String[] files = checkstyleStatus.getReportFiles(project, "hudson.plugins.checkstyle.CheckStylePublisher");
+        String[] files = checkstyleStatus.getReportFiles(project, plugins);
         int errors = checkstyleStatus.searchForErrors(files);
         return factory.getCheckstyleImage(errors, style);
     }

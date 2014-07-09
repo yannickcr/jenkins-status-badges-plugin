@@ -42,7 +42,7 @@ public class ImageResolver {
         if (errors == 0) {
             status = "no error";
             color = "brightgreen";
-        } else {
+        } else if (errors > 0) {
             status = errors + " error" + (errors > 1 ? "s" : "");
             color = "red";
         }
@@ -65,8 +65,10 @@ public class ImageResolver {
             color = "yellow";
         } else if (coverage > 50) {
             color = "orange";
-        } else {
+        } else if (coverage >= 0) {
             color = "red";
+        } else {
+            status = "unknown";
         }
 
         return new StatusImage(subject, status, color, style);

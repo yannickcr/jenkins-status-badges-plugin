@@ -20,6 +20,7 @@ import static javax.servlet.http.HttpServletResponse.SC_NOT_MODIFIED;
 public class CoverageAction implements Action {
     private final CoverageActionFactory factory;
     private final CoverageStatus coverageStatus;
+    private final String[] plugins = {"hudson.plugins.clover.CloverPublisher"};
     public final AbstractProject project;
 
     public CoverageAction(CoverageActionFactory factory, AbstractProject project) {
@@ -41,7 +42,7 @@ public class CoverageAction implements Action {
     }
 
     public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException {
-        int coverage = coverageStatus.getCoverage(project, "hudson.plugins.clover.CloverPublisher");
+        int coverage = coverageStatus.getCoverage(project, plugins);
         return factory.getCoverageImage(coverage, style);
     }
 }

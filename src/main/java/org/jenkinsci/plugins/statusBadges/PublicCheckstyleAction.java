@@ -40,6 +40,7 @@ import hudson.model.*;
 public class PublicCheckstyleAction implements UnprotectedRootAction {
     private final ImageResolver iconResolver;
     private final CheckstyleStatus checkstyleStatus;
+    private final String[] plugins = {"hudson.plugins.checkstyle.CheckStylePublisher"};
     final public static Permission VIEW_STATUS = new Permission(Item.PERMISSIONS, "ViewStatus", Messages._ViewStatus_Permission(), Item.READ, PermissionScope.ITEM);
 
     public PublicCheckstyleAction() throws IOException {
@@ -61,7 +62,7 @@ public class PublicCheckstyleAction implements UnprotectedRootAction {
 
     public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException {
         AbstractProject<?, ?> project = checkstyleStatus.getProject(job, req, rsp);
-        String[] files = checkstyleStatus.getReportFiles(project, "hudson.plugins.checkstyle.CheckStylePublisher");
+        String[] files = checkstyleStatus.getReportFiles(project, plugins);
         int errors = checkstyleStatus.searchForErrors(files);
         return iconResolver.getCheckstyleImage(errors, style);
     }
