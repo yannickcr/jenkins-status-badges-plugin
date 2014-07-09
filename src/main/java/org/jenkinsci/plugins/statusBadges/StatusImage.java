@@ -55,7 +55,7 @@ class StatusImage implements HttpResponse {
         }
 
         String fullwidth  = String.valueOf(Math.round(widths[0] + widths[1]));
-        String blockPos   = String.valueOf(Math.round(widths[0]));
+        String blockPos   = String.valueOf(Math.ceil(widths[0]));
         String blockWidth = String.valueOf(Math.round(widths[1]));
         String subjectPos = String.valueOf(Math.round((widths[0] / 2) + 1));
         String statusPos  = String.valueOf(Math.round(widths[0] + (widths[1] / 2) - 1));
