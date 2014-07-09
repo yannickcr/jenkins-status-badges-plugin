@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.statusbadges.BuildAction
+package org.jenkinsci.plugins.statusbadges.StatusAction
 
 def l = namespace(lib.LayoutTagLib)
 def st = namespace("jelly:stapler")

@@ -13,34 +13,26 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
 import static javax.servlet.http.HttpServletResponse.SC_NOT_MODIFIED;
 
-public class BuildAction implements Action {
-    private final BuildActionFactory factory;
-    private final BuildStatus buildStatus;
+public class StatusAction implements Action {
+    private final StatusActionFactory factory;
     public final AbstractProject project;
 
-    public BuildAction(BuildActionFactory factory, AbstractProject project) {
+    public StatusAction(StatusActionFactory factory, AbstractProject project) {
         this.factory = factory;
         this.project = project;
-        buildStatus = new BuildStatus();
     }
 
     public String getIconFileName() {
-        return null;
+        return Jenkins.RESOURCE_PATH + "/plugin/status-badges/images/24x24/shield.png";
     }
 
     public String getDisplayName() {
-        return null;
+        return Messages.StatusAction_DisplayName();
     }
 
     public String getUrlName() {
-        return "statusbadges-build";
-    }
-
-    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String style) throws IOException, ServletException {
-        return factory.getBuildImage(project.getIconColor(), style);
+        return "statusbadges";
     }
 }

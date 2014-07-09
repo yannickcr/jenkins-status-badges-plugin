@@ -22,7 +22,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-public class CheckStyleStatus extends Status {
+public class CheckstyleStatus extends Status {
 
     public String[] getReportFiles(AbstractProject<?, ?> project, String plugin) throws IOException, ParserConfigurationException, SAXException, InterruptedException {
         AbstractBuild<?, ?> lastBuild = project.getLastBuild();

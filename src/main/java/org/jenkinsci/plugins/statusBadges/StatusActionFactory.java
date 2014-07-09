@@ -11,21 +11,21 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Extension
-public class BuildActionFactory extends TransientProjectActionFactory {
+public class StatusActionFactory extends TransientProjectActionFactory {
 
     private final ImageResolver iconResolver;
 
-    public BuildActionFactory() {
+    public StatusActionFactory() {
         iconResolver = new ImageResolver();
     }
 
     @Override
     public Collection<? extends Action> createFor(AbstractProject target) {
-        return Collections.singleton(new BuildAction(this,target));
+        return Collections.singleton(new StatusAction(this,target));
     }
 
-    public StatusImage getBuildImage(BallColor ballColor, String style) throws IOException {
-        return iconResolver.getBuildImage(ballColor, style);
+    public StatusImage getBuildImage(BallColor color, String style) throws IOException {
+        return iconResolver.getBuildImage(color, style);
     }
 
 }

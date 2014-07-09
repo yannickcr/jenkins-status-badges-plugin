@@ -17,15 +17,15 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import static javax.servlet.http.HttpServletResponse.SC_NOT_MODIFIED;
 
-public class BuildAction implements Action {
-    private final BuildActionFactory factory;
-    private final BuildStatus buildStatus;
+public class CoverageAction implements Action {
+    private final CoverageActionFactory factory;
+    private final CoverageStatus coverageStatus;
     public final AbstractProject project;
 
-    public BuildAction(BuildActionFactory factory, AbstractProject project) {
+    public CoverageAction(CoverageActionFactory factory, AbstractProject project) {
         this.factory = factory;
         this.project = project;
-        buildStatus = new BuildStatus();
+        coverageStatus = new CoverageStatus();
     }
 
     public String getIconFileName() {
@@ -37,10 +37,11 @@ public class BuildAction implements Action {
     }
 
     public String getUrlName() {
-        return "statusbadges-build";
+        return "statusbadges-coverage";
     }
 
-    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String style) throws IOException, ServletException {
-        return factory.getBuildImage(project.getIconColor(), style);
+    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException {
+        int coverage = coverageStatus.getCoverage(project, "hudson.plugins.clover.CloverPublisher");
+        return factory.getCoverageImage(coverage, style);
     }
 }

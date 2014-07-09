@@ -39,12 +39,12 @@ import hudson.model.*;
 @Extension
 public class PublicCheckstyleAction implements UnprotectedRootAction {
     private final ImageResolver iconResolver;
-    private final CheckStyleStatus checkStyleStatus;
+    private final CheckstyleStatus checkstyleStatus;
     final public static Permission VIEW_STATUS = new Permission(Item.PERMISSIONS, "ViewStatus", Messages._ViewStatus_Permission(), Item.READ, PermissionScope.ITEM);
 
     public PublicCheckstyleAction() throws IOException {
         iconResolver = new ImageResolver();
-        checkStyleStatus = new CheckStyleStatus();
+        checkstyleStatus = new CheckstyleStatus();
     }
 
     public String getUrlName() {
@@ -60,9 +60,9 @@ public class PublicCheckstyleAction implements UnprotectedRootAction {
     }
 
     public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException {
-        AbstractProject<?, ?> project = checkStyleStatus.getProject(job, req, rsp);
-        String[] files = checkStyleStatus.getReportFiles(project, "hudson.plugins.checkstyle.CheckStylePublisher");
-        int errors = checkStyleStatus.searchForErrors(files);
+        AbstractProject<?, ?> project = checkstyleStatus.getProject(job, req, rsp);
+        String[] files = checkstyleStatus.getReportFiles(project, "hudson.plugins.checkstyle.CheckStylePublisher");
+        int errors = checkstyleStatus.searchForErrors(files);
         return iconResolver.getCheckstyleImage(errors, style);
     }
 

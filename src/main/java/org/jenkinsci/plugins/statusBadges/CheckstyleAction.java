@@ -17,15 +17,15 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import static javax.servlet.http.HttpServletResponse.SC_NOT_MODIFIED;
 
-public class BuildAction implements Action {
-    private final BuildActionFactory factory;
-    private final BuildStatus buildStatus;
+public class CheckstyleAction implements Action {
+    private final CheckstyleActionFactory factory;
+    private final CheckstyleStatus checkstyleStatus;
     public final AbstractProject project;
 
-    public BuildAction(BuildActionFactory factory, AbstractProject project) {
+    public CheckstyleAction(CheckstyleActionFactory factory, AbstractProject project) {
         this.factory = factory;
         this.project = project;
-        buildStatus = new BuildStatus();
+        checkstyleStatus = new CheckstyleStatus();
     }
 
     public String getIconFileName() {
@@ -37,10 +37,12 @@ public class BuildAction implements Action {
     }
 
     public String getUrlName() {
-        return "statusbadges-build";
+        return "statusbadges-checkstyle";
     }
 
-    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String style) throws IOException, ServletException {
-        return factory.getBuildImage(project.getIconColor(), style);
+    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException {
+        String[] files = checkstyleStatus.getReportFiles(project, "hudson.plugins.checkstyle.CheckStylePublisher");
+        int errors = checkstyleStatus.searchForErrors(files);
+        return factory.getCheckstyleImage(errors, style);
     }
 }
