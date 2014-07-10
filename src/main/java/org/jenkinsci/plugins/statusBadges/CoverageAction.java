@@ -42,7 +42,7 @@ public class CoverageAction implements Action {
     }
 
     public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException {
-        int coverage = coverageStatus.getCoverage(project, plugins);
+        int coverage = coverageStatus.getCoverage(project);
         return factory.getCoverageImage(coverage, style);
     }
 }

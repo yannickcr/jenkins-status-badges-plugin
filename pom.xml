@@ -6,6 +6,7 @@
     <version>1.480.3</version>
   </parent>
 
+  <name>Jenkins Status Badges</name>
   <artifactId>status-badges</artifactId>
   <version>0.0.1</version>
   <packaging>hpi</packaging>
@@ -30,6 +31,11 @@
       <groupId>net.java.dev.jna</groupId>
       <artifactId>jna</artifactId>
       <version>3.2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>clover</artifactId>
+      <version>4.3.0</version>
     </dependency>
   </dependencies>
 

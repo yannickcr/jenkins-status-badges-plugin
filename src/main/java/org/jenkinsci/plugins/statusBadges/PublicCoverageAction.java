@@ -62,7 +62,7 @@ public class PublicCoverageAction implements UnprotectedRootAction {
 
     public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException {
         AbstractProject<?, ?> project = coverageStatus.getProject(job, req, rsp);
-        int coverage = coverageStatus.getCoverage(project, plugins);
+        int coverage = coverageStatus.getCoverage(project);
         return iconResolver.getCoverageImage(coverage, style);
     }
 
