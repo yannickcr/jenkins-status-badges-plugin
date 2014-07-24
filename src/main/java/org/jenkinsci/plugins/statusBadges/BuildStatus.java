@@ -22,6 +22,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-public class BuildStatus extends Status {
+public class BuildStatus extends GenericStatus {
 
 }

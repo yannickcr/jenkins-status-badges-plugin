@@ -9,7 +9,7 @@ import hudson.plugins.clover.CloverBuildAction;
 
 import java.util.List;
 
-public class CoverageStatus extends Status {
+public class CoverageStatus extends GenericStatus {
 
     public int getCoverage(AbstractProject<?, ?> project) {
         AbstractBuild<?, ?> lastBuild = project.getLastBuild();

@@ -25,7 +25,7 @@ import org.xml.sax.SAXException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckstyleStatus extends Status {
+public class CheckstyleStatus extends GenericStatus {
 
     public String[] getReportFiles(AbstractProject<?, ?> project, String[] plugins) throws IOException, ParserConfigurationException, SAXException, InterruptedException {
         AbstractBuild<?, ?> lastBuild = project.getLastBuild();
