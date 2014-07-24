@@ -10,7 +10,7 @@
     <path fill="{{color}}" d="M{{blockPos}} 0h{{blockWidth}}v20h-{{blockWidth}}zM{{blockPos}} 0h4v20h-4z" />
     <path fill="url(#a)" d="M0 0h{{fullwidth}}v20h-{{fullwidth}}z" />
     <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
-        <text x="{{subjectPos}}" y="13">{{subject}}</text>
-        <text x="{{statusPos}}" y="13">{{status}}</text>
+        <text x="{{subjectPos}}" y="14">{{subject}}</text>
+        <text x="{{statusPos}}" y="14">{{status}}</text>
     </g>
 </svg>

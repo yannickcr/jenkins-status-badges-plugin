@@ -13,9 +13,10 @@ import java.net.URL;
 import java.util.Map;
 import java.util.HashMap;
 
-import java.awt.geom.AffineTransform;
-import java.awt.font.FontRenderContext;
 import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Canvas;
+import java.awt.FontFormatException;
 
 import static javax.servlet.http.HttpServletResponse.*;
 
@@ -36,7 +37,7 @@ class StatusImage implements HttpResponse {
         };
     };
 
-    StatusImage(String subject, String status, String colorName, String style) throws IOException {
+    StatusImage(String subject, String status, String colorName, String style) throws FontFormatException, IOException {
         etag = Jenkins.RESOURCE_PATH + '/' + subject + status + colorName;
 
         if (style == null) {
@@ -54,11 +55,11 @@ class StatusImage implements HttpResponse {
             color = '#' + colorName;
         }
 
-        String fullwidth  = String.valueOf(Math.round(widths[0] + widths[1]));
-        String blockPos   = String.valueOf(Math.ceil(widths[0]));
-        String blockWidth = String.valueOf(Math.round(widths[1]));
-        String subjectPos = String.valueOf(Math.round((widths[0] / 2) + 1));
-        String statusPos  = String.valueOf(Math.round(widths[0] + (widths[1] / 2) - 1));
+        String fullwidth  = String.valueOf(widths[0] + widths[1]);
+        String blockPos   = String.valueOf(widths[0]);
+        String blockWidth = String.valueOf(widths[1]);
+        String subjectPos = String.valueOf((widths[0] / 2) + 1);
+        String statusPos  = String.valueOf(widths[0] + (widths[1] / 2) - 1);
 
         try {
             payload = IOUtils.toString(s, "utf-8")
@@ -78,11 +79,14 @@ class StatusImage implements HttpResponse {
         length = Integer.toString(payload.length());
     }
 
-    public double measureText(String text) {
-        AffineTransform af = new AffineTransform();
-        FontRenderContext fr = new FontRenderContext(af, true, true);
-        Font f = new Font("Verdana, 'DejaVu Sans'", 0, 11);
-        return f.getStringBounds(text, fr).getWidth();
+    public int measureText(String text) throws FontFormatException, IOException {
+        URL fontURL             = new URL(Jenkins.getInstance().pluginManager.getPlugin("status-badges").baseResourceURL, "fonts/Verdana.ttf");
+        InputStream fontStream  = fontURL.openStream();
+        Font defaultFont        = Font.createFont(Font.TRUETYPE_FONT, fontStream);
+        defaultFont             = defaultFont.deriveFont(11f);
+        Canvas canvas           = new Canvas();
+        FontMetrics fontMetrics = canvas.getFontMetrics(defaultFont);
+        return fontMetrics.stringWidth(text);
     }
 
     public void generateResponse(StaplerRequest req, StaplerResponse rsp, Object node) throws IOException, ServletException {
