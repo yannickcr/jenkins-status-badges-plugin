@@ -6,6 +6,7 @@ import jenkins.model.*;
 import hudson.*;
 import hudson.model.*;
 import hudson.plugins.checkstyle.CheckStyleResultAction;
+import hudson.plugins.dry.DryResultAction;
 
 import java.util.List;
 
@@ -16,7 +17,8 @@ public class GradeStatus extends GenericStatus {
         CheckStyleResultAction action;
         double grade = 0;
         double checkstyle = getCheckstyle(lastBuild);
-        grade = checkstyle / 1;
+        double duplicate = getDuplicate(lastBuild);
+        grade = (checkstyle + duplicate) / 2;
         return grade;
     }
 
@@ -35,11 +37,33 @@ public class GradeStatus extends GenericStatus {
 
         if (warnings >= unHealthy) {
             checkstyle = 0;
-        } else {
+        } else if (warnings >= healthy) {
             checkstyle = 2;
         }
 
         return checkstyle;
+    }
+
+    public double getDuplicate(AbstractBuild<?, ?> lastBuild) {
+        DryResultAction action;
+        double duplicate = 4;
+        try {
+            action = lastBuild.getAction(hudson.plugins.dry.DryResultAction.class);
+        } catch(Exception e) {
+            return duplicate;
+        }
+
+        int unHealthy = Integer.parseInt(action.getHealthDescriptor().getUnHealthy());
+        int healthy   = Integer.parseInt(action.getHealthDescriptor().getHealthy());
+        int warnings  = action.getResult().getNumberOfWarnings();
+
+        if (warnings >= unHealthy) {
+            duplicate = 0;
+        } else if (warnings >= healthy) {
+            duplicate = 2;
+        }
+
+        return duplicate;
     }
 
 }

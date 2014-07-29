@@ -4,6 +4,8 @@ import hudson.model.BallColor;
 import java.io.IOException;
 import java.awt.FontFormatException;
 
+import java.util.Locale;
+
 public class ImageResolver {
 
     public StatusImage getBuildImage(BallColor ballColor, String style) throws IOException, FontFormatException {
@@ -37,7 +39,7 @@ public class ImageResolver {
 
     public StatusImage getGradeImage(double grade, String style) throws IOException, FontFormatException {
         String subject = "grade";
-        String status = String.valueOf(grade);
+        String status = String.format(Locale.US, "%.1f", grade);
         String color = "lightgrey";
 
         if (grade > 3.5) {
