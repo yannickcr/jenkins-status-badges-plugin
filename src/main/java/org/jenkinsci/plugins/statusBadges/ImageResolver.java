@@ -35,17 +35,25 @@ public class ImageResolver {
         return new StatusImage(subject, status, color, style);
     }
 
-    public StatusImage getCheckstyleImage(int errors, String style) throws IOException, FontFormatException {
-        String subject = "checkstyle";
-        String status = "unknown";
+    public StatusImage getGradeImage(double grade, String style) throws IOException, FontFormatException {
+        String subject = "grade";
+        String status = String.valueOf(grade);
         String color = "lightgrey";
 
-        if (errors == 0) {
-            status = "no error";
+        if (grade > 3.5) {
             color = "brightgreen";
-        } else if (errors > 0) {
-            status = errors + " error" + (errors > 1 ? "s" : "");
+        } else if (grade > 3) {
+            color = "green";
+        } else if (grade > 2.5) {
+            color = "yellowgreen";
+        } else if (grade > 2) {
+            color = "yellow";
+        } else if (grade > 1) {
+            color = "orange";
+        } else if (grade >= 0) {
             color = "red";
+        } else {
+            status = "unknown";
         }
 
         return new StatusImage(subject, status, color, style);
@@ -53,7 +61,7 @@ public class ImageResolver {
 
     public StatusImage getCoverageImage(int coverage, String style) throws IOException, FontFormatException {
         String subject = "coverage";
-        String status = Integer.toString(coverage) + "%";
+        String status = String.valueOf(coverage) + "%";
         String color = "lightgrey";
 
         if (coverage > 90) {

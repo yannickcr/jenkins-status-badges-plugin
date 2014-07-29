@@ -50,8 +50,8 @@ l.layout {
         def publicbadgeBuild = "${app.rootUrl}statusbadges-build/icon?job=${fullJobName}";
         def badgeCoverage = base + "statusbadges-coverage/icon"
         def publicbadgeCoverage = "${app.rootUrl}statusbadges-coverage/icon?job=${fullJobName}";
-        def badgeCheckstyle = base + "statusbadges-checkstyle/icon"
-        def publicbadgeCheckstyle = "${app.rootUrl}statusbadges-checkstyle/icon?job=${fullJobName}";
+        def badgeGrade = base + "statusbadges-grade/icon"
+        def publicbadgeGrade = "${app.rootUrl}statusbadges-grade/icon?job=${fullJobName}";
 
         table(class:"codes") {
             thead {
@@ -78,13 +78,13 @@ l.layout {
                 }
                 tr {
                     td {
-                        img(src:publicbadgeCheckstyle)
+                        img(src:publicbadgeGrade)
                     }
                     td {
                         b {text(_("Protected"))}
-                        input(type:"text",value:badgeCheckstyle,class:"select-all")
+                        input(type:"text",value:badgeGrade,class:"select-all")
                         b {text(_("Unprotected"))}
-                        input(type:"text",value:publicbadgeCheckstyle,class:"select-all")
+                        input(type:"text",value:publicbadgeGrade,class:"select-all")
                     }
                 }
                 tr {

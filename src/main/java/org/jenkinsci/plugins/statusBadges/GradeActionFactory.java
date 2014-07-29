@@ -13,21 +13,21 @@ import java.util.Collections;
 import java.awt.FontFormatException;
 
 @Extension
-public class CheckstyleActionFactory extends TransientProjectActionFactory {
+public class GradeActionFactory extends TransientProjectActionFactory {
 
     private final ImageResolver iconResolver;
 
-    public CheckstyleActionFactory() {
+    public GradeActionFactory() {
         iconResolver = new ImageResolver();
     }
 
     @Override
     public Collection<? extends Action> createFor(AbstractProject target) {
-        return Collections.singleton(new CheckstyleAction(this,target));
+        return Collections.singleton(new GradeAction(this,target));
     }
 
-    public StatusImage getCheckstyleImage(int errors, String style) throws IOException, FontFormatException {
-        return iconResolver.getCheckstyleImage(errors, style);
+    public StatusImage getGradeImage(double grade, String style) throws IOException, FontFormatException {
+        return iconResolver.getGradeImage(grade, style);
     }
 
 }

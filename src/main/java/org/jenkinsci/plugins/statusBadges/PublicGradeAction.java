@@ -34,24 +34,23 @@ import hudson.*;
 import hudson.model.*;
 
 /**
- * Exposes the checkstyle status badge via unprotected URL.
+ * Exposes the grade status badge via unprotected URL.
  *
- * http://localhost:8080/status-badges/checkstyle/icon?job=[JOBNAME]
+ * http://localhost:8080/status-badges/grade/icon?job=[JOBNAME]
  */
 @Extension
-public class PublicCheckstyleAction implements UnprotectedRootAction {
+public class PublicGradeAction implements UnprotectedRootAction {
     private final ImageResolver iconResolver;
-    private final CheckstyleStatus checkstyleStatus;
-    private final String[] plugins = {"hudson.plugins.checkstyle.CheckStylePublisher"};
+    private final GradeStatus gradeStatus;
     final public static Permission VIEW_STATUS = new Permission(Item.PERMISSIONS, "ViewStatus", Messages._ViewStatus_Permission(), Item.READ, PermissionScope.ITEM);
 
-    public PublicCheckstyleAction() throws IOException {
+    public PublicGradeAction() throws IOException {
         iconResolver = new ImageResolver();
-        checkstyleStatus = new CheckstyleStatus();
+        gradeStatus = new GradeStatus();
     }
 
     public String getUrlName() {
-        return "statusbadges-checkstyle";
+        return "statusbadges-grade";
     }
 
     public String getIconFileName() {
@@ -63,9 +62,9 @@ public class PublicCheckstyleAction implements UnprotectedRootAction {
     }
 
     public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException, FontFormatException {
-        AbstractProject<?, ?> project = checkstyleStatus.getProject(job, req, rsp);
-        int errors = checkstyleStatus.getCheckstyle(project);
-        return iconResolver.getCheckstyleImage(errors, style);
+        AbstractProject<?, ?> project = gradeStatus.getProject(job, req, rsp);
+        double grade = gradeStatus.getGrade(project);
+        return iconResolver.getGradeImage(grade, style);
     }
 
 }

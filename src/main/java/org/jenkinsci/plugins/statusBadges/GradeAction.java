@@ -18,16 +18,15 @@ import org.xml.sax.SAXException;
 import java.awt.FontFormatException;
 import static javax.servlet.http.HttpServletResponse.SC_NOT_MODIFIED;
 
-public class CheckstyleAction implements Action {
-    private final CheckstyleActionFactory factory;
-    private final CheckstyleStatus checkstyleStatus;
-    private final String[] plugins = {"hudson.plugins.checkstyle.CheckStylePublisher"};
+public class GradeAction implements Action {
+    private final GradeActionFactory factory;
+    private final GradeStatus gradeStatus;
     public final AbstractProject project;
 
-    public CheckstyleAction(CheckstyleActionFactory factory, AbstractProject project) {
+    public GradeAction(GradeActionFactory factory, AbstractProject project) {
         this.factory = factory;
         this.project = project;
-        checkstyleStatus = new CheckstyleStatus();
+        gradeStatus = new GradeStatus();
     }
 
     public String getIconFileName() {
@@ -39,11 +38,11 @@ public class CheckstyleAction implements Action {
     }
 
     public String getUrlName() {
-        return "statusbadges-checkstyle";
+        return "statusbadges-grade";
     }
 
     public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException, FontFormatException {
-        int errors = checkstyleStatus.getCheckstyle(project);
-        return factory.getCheckstyleImage(errors, style);
+        double grade = gradeStatus.getGrade(project);
+        return factory.getGradeImage(grade, style);
     }
 }
