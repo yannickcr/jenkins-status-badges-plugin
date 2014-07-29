@@ -2,7 +2,7 @@
 
 Status badges for Jenkins builds, strongly inspired by [shields.io](http://shields.io)
 
-![Jenkins Status Badges](http://i.imgur.com/K7ott3j.png)
+![Jenkins Status Badges](http://i.imgur.com/Q6hCHOz.png)
 
 ## How to build the plugin
 
@@ -14,9 +14,10 @@ You should get a `status-badges.hpi` in the `target` directory, use the upload f
 
 ## Supported plugins
 
-To get the build informations this plugin is parsing the project configuration then the report files generated for other plugins.
+To get the build informations this plugin is using the API from other plugins.
 
 The followed plugins are currently supported:
 
-* [Jenkins Clover plugin](http://wiki.jenkins-ci.org/display/JENKINS/Clover+Plugin)
-* [Checkstyle Plug-in](http://wiki.jenkins-ci.org/x/GYCGAQ)
+* [Clover](http://wiki.jenkins-ci.org/display/JENKINS/Clover+Plugin)
+* [Checkstyle](https://wiki.jenkins-ci.org/display/JENKINS/Checkstyle+Plugin)
+* [DRY](https://wiki.jenkins-ci.org/display/JENKINS/DRY+Plugin)
