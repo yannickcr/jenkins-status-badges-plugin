@@ -24,6 +24,8 @@ import org.kohsuke.stapler.StaplerResponse;
 
 import org.xml.sax.SAXException;
 
+import java.awt.FontFormatException;
+
 import javax.xml.parsers.ParserConfigurationException;
 
 import jenkins.*;
@@ -60,7 +62,7 @@ public class PublicCoverageAction implements UnprotectedRootAction {
         return null;
     }
 
-    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException {
+    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException, FontFormatException {
         AbstractProject<?, ?> project = coverageStatus.getProject(job, req, rsp);
         int coverage = coverageStatus.getCoverage(project);
         return iconResolver.getCoverageImage(coverage, style);

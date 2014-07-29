@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.net.URL;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
+import java.awt.FontFormatException;
 import static javax.servlet.http.HttpServletResponse.SC_NOT_MODIFIED;
 
 public class BuildAction implements Action {
@@ -40,7 +41,7 @@ public class BuildAction implements Action {
         return "statusbadges-build";
     }
 
-    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String style) throws IOException, ServletException {
+    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String style) throws IOException, ServletException, FontFormatException {
         return factory.getBuildImage(project.getIconColor(), style);
     }
 }

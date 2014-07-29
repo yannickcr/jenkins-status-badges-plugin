@@ -2,10 +2,11 @@ package org.jenkinsci.plugins.statusbadges;
 
 import hudson.model.BallColor;
 import java.io.IOException;
+import java.awt.FontFormatException;
 
 public class ImageResolver {
 
-    public StatusImage getBuildImage(BallColor ballColor, String style) throws IOException {
+    public StatusImage getBuildImage(BallColor ballColor, String style) throws IOException, FontFormatException {
         String subject = "build";
         String status = "unknown";
         String color = "lightgrey";
@@ -34,7 +35,7 @@ public class ImageResolver {
         return new StatusImage(subject, status, color, style);
     }
 
-    public StatusImage getCheckstyleImage(int errors, String style) throws IOException {
+    public StatusImage getCheckstyleImage(int errors, String style) throws IOException, FontFormatException {
         String subject = "checkstyle";
         String status = "unknown";
         String color = "lightgrey";
@@ -50,7 +51,7 @@ public class ImageResolver {
         return new StatusImage(subject, status, color, style);
     }
 
-    public StatusImage getCoverageImage(int coverage, String style) throws IOException {
+    public StatusImage getCoverageImage(int coverage, String style) throws IOException, FontFormatException {
         String subject = "coverage";
         String status = Integer.toString(coverage) + "%";
         String color = "lightgrey";

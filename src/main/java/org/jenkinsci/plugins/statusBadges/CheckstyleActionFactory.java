@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 
+import java.awt.FontFormatException;
+
 @Extension
 public class CheckstyleActionFactory extends TransientProjectActionFactory {
 
@@ -24,7 +26,7 @@ public class CheckstyleActionFactory extends TransientProjectActionFactory {
         return Collections.singleton(new CheckstyleAction(this,target));
     }
 
-    public StatusImage getCheckstyleImage(int errors, String style) throws IOException {
+    public StatusImage getCheckstyleImage(int errors, String style) throws IOException, FontFormatException {
         return iconResolver.getCheckstyleImage(errors, style);
     }
 

@@ -22,6 +22,8 @@ import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
+import java.awt.FontFormatException;
+
 /**
  * Exposes the build status badge via unprotected URL.
  *
@@ -50,7 +52,7 @@ public class PublicBuildAction implements UnprotectedRootAction {
         return null;
     }
 
-    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job, @QueryParameter String style) throws IOException, ServletException {
+    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job, @QueryParameter String style) throws IOException, ServletException, FontFormatException {
         AbstractProject<?, ?> project = buildStatus.getProject(job, req, rsp);
         return iconResolver.getBuildImage(project.getIconColor(), style);
     }

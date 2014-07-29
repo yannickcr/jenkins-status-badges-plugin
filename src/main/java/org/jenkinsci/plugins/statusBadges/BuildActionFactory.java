@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 
+import java.awt.FontFormatException;
+
 @Extension
 public class BuildActionFactory extends TransientProjectActionFactory {
 
@@ -24,7 +26,7 @@ public class BuildActionFactory extends TransientProjectActionFactory {
         return Collections.singleton(new BuildAction(this,target));
     }
 
-    public StatusImage getBuildImage(BallColor ballColor, String style) throws IOException {
+    public StatusImage getBuildImage(BallColor ballColor, String style) throws IOException, FontFormatException {
         return iconResolver.getBuildImage(ballColor, style);
     }
 

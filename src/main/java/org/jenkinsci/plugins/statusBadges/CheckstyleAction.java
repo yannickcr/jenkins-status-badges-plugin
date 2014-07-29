@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.net.URL;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
+import java.awt.FontFormatException;
 import static javax.servlet.http.HttpServletResponse.SC_NOT_MODIFIED;
 
 public class CheckstyleAction implements Action {
@@ -41,9 +42,8 @@ public class CheckstyleAction implements Action {
         return "statusbadges-checkstyle";
     }
 
-    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException {
-        String[] files = checkstyleStatus.getReportFiles(project, plugins);
-        int errors = checkstyleStatus.searchForErrors(files);
+    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException, FontFormatException {
+        int errors = checkstyleStatus.getCheckstyle(project);
         return factory.getCheckstyleImage(errors, style);
     }
 }

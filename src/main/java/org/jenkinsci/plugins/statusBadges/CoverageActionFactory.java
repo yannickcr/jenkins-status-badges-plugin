@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 
+import java.awt.FontFormatException;
+
 @Extension
 public class CoverageActionFactory extends TransientProjectActionFactory {
 
@@ -24,7 +26,7 @@ public class CoverageActionFactory extends TransientProjectActionFactory {
         return Collections.singleton(new CoverageAction(this,target));
     }
 
-    public StatusImage getCoverageImage(int coverage, String style) throws IOException {
+    public StatusImage getCoverageImage(int coverage, String style) throws IOException, FontFormatException {
         return iconResolver.getCoverageImage(coverage, style);
     }
 

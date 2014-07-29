@@ -37,6 +37,11 @@
       <artifactId>clover</artifactId>
       <version>4.3.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.jvnet.hudson.plugins</groupId>
+      <artifactId>checkstyle</artifactId>
+      <version>3.39</version>
+    </dependency>
   </dependencies>
 
   <scm>

@@ -24,6 +24,8 @@ import org.kohsuke.stapler.StaplerResponse;
 
 import org.xml.sax.SAXException;
 
+import java.awt.FontFormatException;
+
 import javax.xml.parsers.ParserConfigurationException;
 
 import jenkins.*;
@@ -60,10 +62,9 @@ public class PublicCheckstyleAction implements UnprotectedRootAction {
         return null;
     }
 
-    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException {
+    public HttpResponse doIcon(StaplerRequest req, StaplerResponse rsp, @QueryParameter String job, @QueryParameter String style) throws IOException, ParserConfigurationException, ServletException, InterruptedException, SAXException, FontFormatException {
         AbstractProject<?, ?> project = checkstyleStatus.getProject(job, req, rsp);
-        String[] files = checkstyleStatus.getReportFiles(project, plugins);
-        int errors = checkstyleStatus.searchForErrors(files);
+        int errors = checkstyleStatus.getCheckstyle(project);
         return iconResolver.getCheckstyleImage(errors, style);
     }
 
