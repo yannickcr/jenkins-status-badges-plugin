@@ -6,6 +6,8 @@ import jenkins.model.*;
 import hudson.*;
 import hudson.model.*;
 import hudson.plugins.clover.CloverBuildAction;
+import hudson.plugins.cobertura.CoberturaBuildAction;
+import hudson.plugins.cobertura.targets.CoverageMetric;
 
 import java.util.List;
 
@@ -13,13 +15,21 @@ public class CoverageStatus extends GenericStatus {
 
     public int getCoverage(AbstractProject<?, ?> project) {
         AbstractBuild<?, ?> lastBuild = project.getLastBuild();
-        CloverBuildAction action;
+        CloverBuildAction cloverAction;
+        CoberturaBuildAction coberturaAction;
+        int percentage;
         try {
-            action = lastBuild.getAction(hudson.plugins.clover.CloverBuildAction.class);
-        } catch(Exception e) {
-            return -1;
+            cloverAction = lastBuild.getAction(hudson.plugins.clover.CloverBuildAction.class);
+            percentage = cloverAction.getResult().getElementCoverage().getPercentage();
+        } catch(Exception cloverE) {
+            try {
+                coberturaAction = lastBuild.getAction(hudson.plugins.cobertura.CoberturaBuildAction.class);
+                percentage = coberturaAction.getResult().getCoverage(CoverageMetric.LINE).getPercentage();
+            } catch(Exception coberturaE) {
+                return -1;
+            }
         }
-        return action.getResult().getElementCoverage().getPercentage();
+        return percentage;
     }
 
 }
