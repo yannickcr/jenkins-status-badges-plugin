@@ -80,7 +80,7 @@ class StatusImage implements HttpResponse {
     }
 
     public int measureText(String text) throws FontFormatException, IOException {
-        URL fontURL             = new URL(Jenkins.getInstance().pluginManager.getPlugin("status-badges").baseResourceURL, "fonts/Verdana.ttf");
+        URL fontURL             = new URL(Jenkins.getInstance().pluginManager.getPlugin("status-badges").baseResourceURL, "fonts/verdana.ttf");
         InputStream fontStream  = fontURL.openStream();
         Font defaultFont        = Font.createFont(Font.TRUETYPE_FONT, fontStream);
         defaultFont             = defaultFont.deriveFont(11f);
