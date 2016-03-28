@@ -13,21 +13,27 @@ import java.util.Collections;
 import java.awt.FontFormatException;
 
 @Extension
-public class StatusActionFactory extends TransientProjectActionFactory {
+public class StatusActionFactory
+    extends TransientProjectActionFactory
+{
 
     private final ImageResolver iconResolver;
 
-    public StatusActionFactory() {
+    public StatusActionFactory()
+    {
         iconResolver = new ImageResolver();
     }
 
     @Override
-    public Collection<? extends Action> createFor(AbstractProject target) {
-        return Collections.singleton(new StatusAction(this,target));
+    public Collection<? extends Action> createFor( AbstractProject target )
+    {
+        return Collections.singleton( new StatusAction( this, target ) );
     }
 
-    public StatusImage getBuildImage(BallColor color, String style) throws IOException, FontFormatException {
-        return iconResolver.getBuildImage(color, style);
+    public StatusImage getBuildImage( BallColor color, String style )
+        throws IOException, FontFormatException
+    {
+        return iconResolver.getBuildImage( color, style );
     }
 
 }
