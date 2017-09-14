@@ -1,6 +1,7 @@
 package org.jenkinsci.plugins.statusbadges;
 
 import hudson.Extension;
+import hudson.model.Job;
 import hudson.model.UnprotectedRootAction;
 import hudson.model.AbstractProject;
 import java.io.IOException;
@@ -51,7 +52,7 @@ public class PublicBuildAction
                                 @QueryParameter String style )
         throws IOException, FontFormatException
     {
-        AbstractProject<?, ?> project = buildStatus.getProject( job, req, rsp );
+        Job<?, ?> project = buildStatus.getProject( job, req, rsp );
         return iconResolver.getBuildImage( project.getIconColor(), style );
     }
 

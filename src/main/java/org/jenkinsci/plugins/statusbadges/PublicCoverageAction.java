@@ -1,16 +1,15 @@
 package org.jenkinsci.plugins.statusbadges;
 
 import hudson.Extension;
+import hudson.model.Job;
 import hudson.model.UnprotectedRootAction;
-import hudson.model.AbstractProject;
-import java.io.IOException;
-
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
-import java.awt.FontFormatException;
+import java.awt.*;
+import java.io.IOException;
 
 /**
  * Exposes the coverage status badge via unprotected URL. http://localhost:8080/statusbadges-coverage/icon?job=[JOBNAME]
@@ -51,7 +50,7 @@ public class PublicCoverageAction
                                 @QueryParameter String style )
         throws IOException, FontFormatException
     {
-        AbstractProject<?, ?> project = coverageStatus.getProject( job, req, rsp );
+        Job<?, ?> project = coverageStatus.getProject( job, req, rsp );
         int coverage = coverageStatus.getCoverage( project );
         return iconResolver.getCoverageImage( coverage, style );
     }

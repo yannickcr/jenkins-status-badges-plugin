@@ -1,7 +1,7 @@
 package org.jenkinsci.plugins.statusbadges;
 
-import hudson.model.AbstractProject;
-import hudson.model.*;
+import hudson.model.Job;
+import hudson.model.Run;
 import hudson.plugins.clover.CloverBuildAction;
 import hudson.plugins.cobertura.CoberturaBuildAction;
 import hudson.plugins.cobertura.targets.CoverageMetric;
@@ -10,9 +10,9 @@ public class CoverageStatus
     extends BuildStatus
 {
 
-    public int getCoverage( AbstractProject<?, ?> project )
+    public int getCoverage( Job<?, ?> project )
     {
-        AbstractBuild<?, ?> lastBuild = project.getLastBuild();
+        Run<?, ?> lastBuild = project.getLastBuild();
         CloverBuildAction cloverAction;
         CoberturaBuildAction coberturaAction;
         int percentage;

@@ -1,7 +1,7 @@
 package org.jenkinsci.plugins.statusbadges;
 
-import hudson.model.AbstractProject;
-import hudson.model.*;
+import hudson.model.Job;
+import hudson.model.Run;
 import hudson.plugins.checkstyle.CheckStyleResultAction;
 import hudson.plugins.dry.DryResultAction;
 
@@ -9,9 +9,9 @@ public class GradeStatus
     extends BuildStatus
 {
 
-    public double getGrade( AbstractProject<?, ?> project )
+    public double getGrade( Job<?, ?> project )
     {
-        AbstractBuild<?, ?> lastBuild = project.getLastBuild();
+        Run<?, ?> lastBuild = project.getLastBuild();
         double grade = 0;
         double checkstyle = getCheckstyle( lastBuild );
         double duplicate = getDuplicate( lastBuild );
@@ -19,7 +19,7 @@ public class GradeStatus
         return grade;
     }
 
-    public double getCheckstyle( AbstractBuild<?, ?> lastBuild )
+    public double getCheckstyle( Run<?, ?> lastBuild )
     {
         CheckStyleResultAction action;
         double checkstyle = 4;
@@ -41,7 +41,7 @@ public class GradeStatus
         return checkstyle;
     }
 
-    public double getDuplicate( AbstractBuild<?, ?> lastBuild )
+    public double getDuplicate( Run<?, ?> lastBuild )
     {
         DryResultAction action;
         double duplicate = 4;
