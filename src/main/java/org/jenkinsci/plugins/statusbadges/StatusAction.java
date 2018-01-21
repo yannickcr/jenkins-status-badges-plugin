@@ -1,16 +1,16 @@
 package org.jenkinsci.plugins.statusbadges;
 
-import hudson.model.AbstractProject;
 import hudson.model.Action;
+import hudson.model.Job;
 import jenkins.model.Jenkins;
 
 public class StatusAction
     implements Action
 {
 
-    public final AbstractProject<?, ?> project;
+    public final Job<?, ?> project;
 
-    public StatusAction( StatusActionFactory factory, AbstractProject<?, ?> project )
+    public StatusAction( StatusActionFactory factory, Job<?, ?> project )
     {
         this.project = project;
     }

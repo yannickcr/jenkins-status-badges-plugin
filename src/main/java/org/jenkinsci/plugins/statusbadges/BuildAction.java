@@ -1,22 +1,23 @@
 package org.jenkinsci.plugins.statusbadges;
 
-import hudson.model.AbstractProject;
 import hudson.model.Action;
+import hudson.model.Job;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
+
+import java.awt.*;
 import java.io.IOException;
-import java.awt.FontFormatException;
 
 public class BuildAction
     implements Action
 {
     private final BuildActionFactory factory;
 
-    public final AbstractProject<?, ?> project;
+    public final Job<?, ?> project;
 
-    public BuildAction( BuildActionFactory factory, AbstractProject<?, ?> project )
+    public BuildAction( BuildActionFactory factory, Job<?, ?> project )
     {
         this.factory = factory;
         this.project = project;

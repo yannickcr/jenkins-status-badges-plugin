@@ -1,19 +1,18 @@
 package org.jenkinsci.plugins.statusbadges;
 
 import hudson.Extension;
-import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.BallColor;
-import hudson.model.TransientProjectActionFactory;
+import hudson.model.Job;
+import jenkins.model.TransientActionFactory;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 
-import java.awt.FontFormatException;
-
 @Extension
-public class BuildActionFactory extends TransientProjectActionFactory {
+public class BuildActionFactory extends TransientActionFactory<Job> {
 
     private final ImageResolver iconResolver;
 
@@ -22,7 +21,12 @@ public class BuildActionFactory extends TransientProjectActionFactory {
     }
 
     @Override
-    public Collection<? extends Action> createFor(AbstractProject target) {
+    public Class<Job> type() {
+        return Job.class;
+    }
+
+    @Override
+    public Collection<? extends Action> createFor(Job target) {
         return Collections.singleton(new BuildAction(this,target));
     }
 

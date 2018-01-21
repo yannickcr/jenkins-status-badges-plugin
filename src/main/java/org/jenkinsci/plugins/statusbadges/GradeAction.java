@@ -1,13 +1,14 @@
 package org.jenkinsci.plugins.statusbadges;
 
-import hudson.model.AbstractProject;
 import hudson.model.Action;
+import hudson.model.Job;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
+
+import java.awt.*;
 import java.io.IOException;
-import java.awt.FontFormatException;
 
 public class GradeAction
     implements Action
@@ -16,9 +17,9 @@ public class GradeAction
 
     private final GradeStatus gradeStatus;
 
-    public final AbstractProject<?, ?> project;
+    public final Job<?, ?> project;
 
-    public GradeAction( GradeActionFactory factory, AbstractProject<?, ?> project )
+    public GradeAction( GradeActionFactory factory, Job<?, ?> project )
     {
         this.factory = factory;
         this.project = project;
