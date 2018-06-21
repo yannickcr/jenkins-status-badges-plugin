@@ -52,6 +52,8 @@ l.layout {
         def publicbadgeCoverage = "${app.rootUrl}statusbadges-coverage/icon?job=${fullJobName}";
         def badgeGrade = base + "statusbadges-grade/icon"
         def publicbadgeGrade = "${app.rootUrl}statusbadges-grade/icon?job=${fullJobName}";
+        def badgeServer = base + "statusbadges-server/icon"
+        def publicbadgeServer = "${app.rootUrl}statusbadges-server/icon?job=${fullJobName}";
 
         table(class:"codes") {
             thead {
@@ -96,6 +98,17 @@ l.layout {
                         input(type:"text",value:badgeCoverage,class:"select-all")
                         b {text(_("Unprotected"))}
                         input(type:"text",value:publicbadgeCoverage,class:"select-all")
+                    }
+                }
+                tr {
+                    td {
+                        img(src:publicbadgeServer)
+                    }
+                    td {
+                        b {text(_("Protected"))}
+                        input(type:"text",value:badgeServer,class:"select-all")
+                        b {text(_("Unprotected"))}
+                        input(type:"text",value:publicbadgeServer,class:"select-all")
                     }
                 }
             }
