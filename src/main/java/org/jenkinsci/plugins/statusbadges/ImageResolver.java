@@ -9,6 +9,53 @@ import java.util.Locale;
 public class ImageResolver
 {
 
+    public StatusImage getServerImage( BallColor ballColor, String style)
+        throws IOException, FontFormatException
+    {
+        String subject = "server";
+        String status = "unknown";
+        String color;
+
+        if ( ballColor.isAnimated() )
+        {
+            status = "checking";
+        }
+        switch ( ballColor )
+        {
+            case RED:
+            case ABORTED:
+                status = "down";
+                // fall through
+            case RED_ANIME:
+            case ABORTED_ANIME:
+                color = "red";
+                break;
+            case YELLOW:
+                status = "unstable";
+                // fall through
+            case YELLOW_ANIME:
+                color = "yellow";
+                break;
+            case BLUE:
+                status = "up";
+                // fall through
+            case BLUE_ANIME:
+                color = "brightgreen";
+                break;
+            case DISABLED:
+            case DISABLED_ANIME:
+            case GREY:
+            case GREY_ANIME:
+            case NOTBUILT:
+            case NOTBUILT_ANIME:
+            default:
+                color = "lightgrey";
+                break;
+        }
+
+        return new StatusImage( subject, status, color, style );
+    }
+
     public StatusImage getBuildImage( BallColor ballColor, String style )
         throws IOException, FontFormatException
     {
