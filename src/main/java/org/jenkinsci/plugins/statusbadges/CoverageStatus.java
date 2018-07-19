@@ -5,6 +5,7 @@ import hudson.model.Run;
 import hudson.plugins.clover.CloverBuildAction;
 import hudson.plugins.cobertura.CoberturaBuildAction;
 import hudson.plugins.cobertura.targets.CoverageMetric;
+import hudson.plugins.jacoco.JacocoBuildAction;
 
 public class CoverageStatus
     extends BuildStatus
@@ -13,27 +14,39 @@ public class CoverageStatus
     public int getCoverage( Job<?, ?> project )
     {
         Run<?, ?> lastBuild = project.getLastBuild();
-        CloverBuildAction cloverAction;
-        CoberturaBuildAction coberturaAction;
-        int percentage;
+        
         try
         {
-            cloverAction = lastBuild.getAction( hudson.plugins.clover.CloverBuildAction.class );
-            percentage = cloverAction.getResult().getElementCoverage().getPercentage();
+            CloverBuildAction cloverAction = lastBuild.getAction(CloverBuildAction.class);
+            return cloverAction.getResult().getElementCoverage().getPercentage();
         }
         catch ( Exception cloverE )
         {
-            try
-            {
-                coberturaAction = lastBuild.getAction( hudson.plugins.cobertura.CoberturaBuildAction.class );
-                percentage = coberturaAction.getResult().getCoverage( CoverageMetric.LINE ).getPercentage();
-            }
-            catch ( Exception coberturaE )
-            {
-                return -1;
-            }
+            // ignore.  if all fail, this will fall through to -1
         }
-        return percentage;
+
+        try
+        {
+            CoberturaBuildAction coberturaAction = lastBuild.getAction(CoberturaBuildAction.class);
+            return coberturaAction.getResult().getCoverage( CoverageMetric.LINE ).getPercentage();
+        }
+        catch ( Exception coberturaE )
+        {
+            // ignore.  if all fail, this will fall through to -1
+        }
+
+        try
+        {
+            JacocoBuildAction jacocoAction = lastBuild.getAction(JacocoBuildAction.class);
+            return jacocoAction.getResult().getLineCoverage().getPercentage();
+        }
+        catch (Exception jacocoE)
+        {
+            // ignore.  if all fail, this will fall through to -1
+        }
+
+
+        return -1;
     }
 
 }
